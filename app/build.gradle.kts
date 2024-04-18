@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -49,6 +52,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -60,9 +64,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-compose")
+    implementation("androidx.compose.material:material-icons-extended") // Extended icons
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.7") // Navigation
+    implementation("androidx.navigation:navigation-compose") // Navigation Compose
+    implementation("io.coil-kt:coil-compose:2.6.0") // Coil
+    implementation("com.google.dagger:hilt-android:2.50") // Hilt
+    kapt("com.google.dagger:hilt-android-compiler:2.50") // Hilt compiler
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -71,4 +78,9 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

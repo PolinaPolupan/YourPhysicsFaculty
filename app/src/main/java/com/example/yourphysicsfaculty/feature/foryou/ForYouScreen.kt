@@ -16,16 +16,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.yourphysicsfaculty.R
 import com.example.yourphysicsfaculty.core.designSystem.component.YPFIcons
 import com.example.yourphysicsfaculty.core.designSystem.theme.YPFTheme
+import com.example.yourphysicsfaculty.core.model.UserNewsResource
 
 @Composable
 fun ForYouScreen(
     modifier: Modifier = Modifier
 ) {
-    ForYouScreenContent(modifier = modifier)
+    //ForYouScreenContent(modifier = modifier)
 }
 
 @Composable
-fun ForYouScreenContent(modifier: Modifier = Modifier) {
+fun ForYouScreenContent(
+    deepLinkedUserNewsResource: UserNewsResource?,
+    onTopicCheckedChanged: (String, Boolean) -> Unit,
+    onTopicClick: (String) -> Unit,
+    onDeepLinkOpened: (String) -> Unit,
+    saveFollowedTopics: () -> Unit,
+    onNewsResourcesCheckedChanged: (String, Boolean) -> Unit,
+    onNewsResourceViewed: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     LazyColumn(modifier = modifier) {
 
     }
@@ -35,6 +45,6 @@ fun ForYouScreenContent(modifier: Modifier = Modifier) {
 @Composable
 fun ForYouScreenPreview(modifier: Modifier = Modifier) {
     YPFTheme {
-        ForYouScreenContent()
+        //ForYouScreenContent()
     }
 }

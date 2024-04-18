@@ -3,4 +3,9 @@
     <string name="for_you_screen_title">For You</string>
     <string name="timetable_screen_title">Timetable</string>
     <string name="bookmarks_screen_title">Bookmarks</string>
+    <string name="practice_title">Practice</string>
+    <string name="laboratory_work_title">Laboratory work</string>
+    <string name="lecture_title">Lecture</string>
+    <string name="independent_work_title">Independent Work</string>
+    <string name="bookmarks_toggle_button">Bookmark toggle</string>
 </resources>
