@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">YourPhysicsFaculty</string>
+    <string name="for_you_screen_title">For You</string>
+    <string name="timetable_screen_title">Timetable</string>
+    <string name="bookmarks_screen_title">Bookmarks</string>
 </resources>

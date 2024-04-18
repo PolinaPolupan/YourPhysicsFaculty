@@ -1,4 +1,4 @@
-package com.example.yourphysicsfaculty.ui.theme
+package com.example.yourphysicsfaculty.core.designSystem.theme
 
 import androidx.compose.ui.graphics.Color
 
