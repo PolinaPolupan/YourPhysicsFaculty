@@ -1,14 +1,44 @@
 package com.example.yourphysicsfaculty.feature.foryou
 
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.yourphysicsfaculty.core.model.UserNewsResource
+import com.example.yourphysicsfaculty.core.data.CompositeUserNewsResourceRepository
+import com.example.yourphysicsfaculty.core.model.NewsResource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ForYouViewModel() : ViewModel() {
-   // val feedState: StateFlow<NewsFeedUiState> = NewsFeedUiState()
+
+@HiltViewModel
+class ForYouViewModel @Inject constructor(
+    private val userNewsResourceRepository: CompositeUserNewsResourceRepository
+) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            userNewsResourceRepository.refresh()
+        }
+    }
+
+
+    var feedState: StateFlow<NewsFeedUiState> =
+        userNewsResourceRepository.observeAll()
+            .map(NewsFeedUiState::Success)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = NewsFeedUiState.Loading,
+            )
 }
+
+
 
 /**
  * A sealed hierarchy describing the state of the feed of news resources.
@@ -26,6 +56,6 @@ sealed interface NewsFeedUiState {
         /**
          * The list of news resources contained in this feed.
          */
-        val feed: List<UserNewsResource>,
+        val feed: List<NewsResource>,
     ) : NewsFeedUiState
 }

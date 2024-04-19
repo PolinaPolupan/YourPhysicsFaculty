@@ -1,6 +1,10 @@
 package com.example.yourphysicsfaculty.core.designSystem.component
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,10 +28,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -40,21 +46,29 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.example.yourphysicsfaculty.R
 import com.example.yourphysicsfaculty.core.designSystem.theme.YPFTheme
+import com.example.yourphysicsfaculty.core.model.NewsResource
 import com.example.yourphysicsfaculty.core.model.Topic
-import com.example.yourphysicsfaculty.core.model.UserNewsResource
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsResourceCard(
-    userNewsResource: UserNewsResource,
+    userNewsResource: NewsResource,
     isBookmarked: Boolean,
     onToggleBookmark: () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var visible by rememberSaveable { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(userNewsResource.url)) }
+
     Card(
-        onClick = onClick,
+        onClick = {
+            visible = !visible
+            onClick()
+                  },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         modifier = modifier
@@ -81,7 +95,10 @@ fun NewsResourceCard(
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(text = userNewsResource.publishDate, style = MaterialTheme.typography.labelSmall)
                     Spacer(modifier = Modifier.height(12.dp))
-                    NewsResourceShortDescription(userNewsResource.content)
+                    AnimatedVisibility(visible = visible) {
+                        NewsResourceShortDescription(userNewsResource.content)
+                    }
+                    Text(text = stringResource(id = R.string.go_to_page_button), modifier = Modifier.clickable { context.startActivity(intent) })
                     Spacer(modifier = Modifier.height(12.dp))
                     NewsResourceTopics(
                         topics = userNewsResource.topics
@@ -154,7 +171,7 @@ fun NewsResourceHeaderImage(
             )
         }
 
-        Image(
+       Image(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp),
@@ -162,7 +179,7 @@ fun NewsResourceHeaderImage(
             painter = if (isError.not() && !isLocalInspection) {
                 imageLoader
             } else {
-                painterResource(R.drawable.sign_fizfak_official)
+                painterResource(R.drawable.ic_launcher_background)
             },
             contentDescription = null,
         )
@@ -178,7 +195,7 @@ fun NewsResourceShortDescription(
 
 @Composable
 fun NewsResourceTopics(
-    topics: List<Topic>,
+    topics: List<String>,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -190,7 +207,7 @@ fun NewsResourceTopics(
             YPFTopicTag(
                 onClick = { /*TODO*/ },
                 enabled = true,
-                text = { Text(text = followableTopic.name.uppercase(Locale.getDefault())) }
+                text = { Text(text = followableTopic.uppercase(Locale.getDefault())) }
             )
         }
     }
@@ -200,7 +217,7 @@ fun NewsResourceTopics(
 @Composable
 private fun ExpandedNewsResourcePreview(
     @PreviewParameter(UserNewsResourcePreviewParameterProvider::class)
-    userNewsResources: List<UserNewsResource>,
+    userNewsResources: List<NewsResource>,
 ) {
     YPFTheme {
         NewsResourceCard(

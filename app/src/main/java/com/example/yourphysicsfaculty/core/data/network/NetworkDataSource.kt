@@ -1,4 +1,4 @@
-package com.example.yourphysicsfaculty.core.network
+package com.example.yourphysicsfaculty.core.data.network
 
 /**
  * Main entry point for accessing news data from the network.

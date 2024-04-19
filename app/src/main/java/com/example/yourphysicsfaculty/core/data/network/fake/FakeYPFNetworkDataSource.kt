@@ -1,8 +1,10 @@
-package com.example.yourphysicsfaculty.core.network.fake
+package com.example.yourphysicsfaculty.core.data.network.fake
 
+import com.example.yourphysicsfaculty.core.data.di.DefaultDispatcher
 import com.example.yourphysicsfaculty.core.model.Topic
-import com.example.yourphysicsfaculty.core.network.NetworkDataSource
-import com.example.yourphysicsfaculty.core.network.NetworkNewsResource
+import com.example.yourphysicsfaculty.core.data.network.NetworkDataSource
+import com.example.yourphysicsfaculty.core.data.network.NetworkNewsResource
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -11,7 +13,9 @@ import javax.inject.Inject
 /**
  * [FakeYPFNetworkDataSource] implementation that provides static news resources to aid development
  */
-class FakeYPFNetworkDataSource @Inject constructor() : NetworkDataSource {
+class FakeYPFNetworkDataSource @Inject constructor(
+    @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
+) : NetworkDataSource {
 
     // A mutex is used to ensure that reads and writes are thread-safe.
     private val accessMutex = Mutex()
@@ -29,7 +33,8 @@ class FakeYPFNetworkDataSource @Inject constructor() : NetworkDataSource {
             headerImageUrl = "https://open.phys.msu.ru/upload/iblock/d5f/uy9nvzu3c34vwooxawwzz4ve2tkz8sn7/g-1XlanIPLU.jpg",
             publishDate = "14.04.2024",
             type = "ДОД 24",
-            topics = listOf(Topic("0", "абитуриентам"), Topic("0", "день открытых дверей")),
+            topics = listOf("абитуриентам", "день открытых дверей"),
+            isBookmarked = false
         ),
         NetworkNewsResource(
             id = "1",
@@ -41,7 +46,8 @@ class FakeYPFNetworkDataSource @Inject constructor() : NetworkDataSource {
             headerImageUrl = "https://open.phys.msu.ru/upload/iblock/7c3/pd6znw5m1lyq3ha2n14vzw2oygjigl7p/%D0%90%D1%82%D0%BE%D0%BC%D1%8B%20%D1%8F%D0%B4%D1%80%D0%B0%20%D1%87%D0%B0%D1%81%D1%82%D0%B8%D1%86%D1%8B.png",
             publishDate = "21.10.2023 17:00:00",
             type = "Университетские субботы",
-            topics = listOf(Topic("0", "студентам"), Topic("0", "университетские субботы"))
+            topics = listOf("студентам", "университетские субботы"),
+            isBookmarked = true
         ),
         NetworkNewsResource(
             id = "2",
@@ -51,7 +57,8 @@ class FakeYPFNetworkDataSource @Inject constructor() : NetworkDataSource {
             headerImageUrl = "https://open.phys.msu.ru/upload/iblock/4be/08gw440byapokld3seoo2rjtcxopcphk/%D0%92%D0%9E%D0%9B%D0%9D%D0%AB%20%D0%A6%D0%A3%D0%9D%D0%90%D0%9C%D0%98.png",
             publishDate = "21.10.2023 17:00:00",
             type = "Университетские субботы",
-            topics = listOf(Topic("0", "студентам"), Topic("0", "университетские субботы"))
+            topics = listOf("студентам",  "университетские субботы"),
+            isBookmarked = false
         ),
         NetworkNewsResource(
             id = "2",
@@ -65,7 +72,8 @@ class FakeYPFNetworkDataSource @Inject constructor() : NetworkDataSource {
             headerImageUrl = "https://open.phys.msu.ru/upload/iblock/192/z8uc2ymimmfx1mo1zxsdymqrxn5i56dz/IMG_3516.JPG",
             publishDate = "21.10.2023 17:00:00",
             type = "Экскурсии",
-            topics = listOf(Topic("0", "студентам"), Topic("0", "экскурсии"))
+            topics = listOf("студентам", "экскурсии"),
+            isBookmarked = true
         )
     )
 

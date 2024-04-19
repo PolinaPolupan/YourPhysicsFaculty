@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
 
@@ -68,8 +69,20 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7") // Navigation
     implementation("androidx.navigation:navigation-compose") // Navigation Compose
     implementation("io.coil-kt:coil-compose:2.6.0") // Coil
-    implementation("com.google.dagger:hilt-android:2.50") // Hilt
-    kapt("com.google.dagger:hilt-android-compiler:2.50") // Hilt compiler
+    implementation("com.google.dagger:hilt-android:2.51.1") // Hilt
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1") // Hilt compiler
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0") // Hilt nav
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0") // Lifecycle compose
+
+    val room_version = "2.6.1"
+
+    implementation ("androidx.room:room-ktx:2.6.1")
+    implementation ("androidx.room:room-runtime:2.6.1")
+    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1") // Gson serialization
+    implementation("com.google.code.gson:gson:2.10") // Gson
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

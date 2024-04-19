@@ -11,5 +11,6 @@ data class NewsResource(
     val headerImageUrl: String?,
     val publishDate: String,
     val type: String,
-    val topics: List<Topic>,
+    val topics: List<String>,
+    val isBookmarked: Boolean
 )
