@@ -13,6 +13,8 @@ interface UserNewsResourceRepository {
     fun observeAll(): Flow<List<NewsResource>>
 
     suspend fun toggleBookmark(newsId: String, isBookmarked: Boolean)
+
+    suspend fun refresh()
     /**
      * Returns available news resources as a stream.
      */

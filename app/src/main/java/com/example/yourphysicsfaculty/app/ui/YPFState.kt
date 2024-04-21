@@ -70,9 +70,3 @@ class YPFAppState(
         }
     }
 }
-
-sealed class ViewState {
-    object LoggedIn: ViewState() // hasLoggedIn = true
-    object NotLoggedIn: ViewState() // hasLoggedIn = false
-    object Loading: ViewState()
-}

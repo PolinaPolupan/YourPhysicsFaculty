@@ -38,6 +38,14 @@ interface NewsResourcesDao {
     @Query("SELECT id FROM news_resources WHERE isBookmarked == true")
     fun getAllBookmarkedIds(): List<String>
 
+   /**
+    * Returns list of ids of bookmarked news
+    *
+    * @return all ids.
+    */
+    @Query("SELECT * FROM news_resources WHERE isBookmarked == true")
+    fun observeAllBookmarked(): Flow<List<NewsResourceEntity>>
+
     /**
      * Observes a single news resource.
      *

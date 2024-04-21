@@ -22,20 +22,22 @@ class DefaultUserNewsResourceRepository @Inject constructor(
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
 ) : UserNewsResourceRepository {
 
+
     override fun observeAll(): Flow<List<NewsResource>> {
         return localDataSource.observeAll().map { it.toExternal() }
     }
 
     override suspend fun toggleBookmark(newsId: String, isBookmarked: Boolean) {
         localDataSource.updateBookmarked(newsId, isBookmarked)
-        //refresh()
+        refresh()
     }
 
-    suspend fun refresh() {
+    override suspend fun refresh() {
         withContext(dispatcher) {
             val remoteNews = networkDataSource.getNewsResources()
+            val bookmarks = localDataSource.getAllBookmarkedIds()
             localDataSource.deleteAll()
-            localDataSource.upsertAll(remoteNews.toLocal())
+            localDataSource.upsertAll(remoteNews.toLocal(bookmarks))
         }
     }
 

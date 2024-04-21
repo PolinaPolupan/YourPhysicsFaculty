@@ -52,7 +52,7 @@ fun NewsResource.asLocal() = NewsResourceEntity(
     isBookmarked = isBookmarked
 )
 
-fun NetworkNewsResource.asLocal() = NewsResourceEntity(
+fun NetworkNewsResource.asLocal(bookmarksIds: List<String>) = NewsResourceEntity(
     id = id,
     title = title,
     content = content,
@@ -61,7 +61,7 @@ fun NetworkNewsResource.asLocal() = NewsResourceEntity(
     publishDate = publishDate,
     type = type,
     topics = topics,
-    isBookmarked = isBookmarked
+    isBookmarked = id in bookmarksIds
 )
 // Note: JvmName is used to provide a unique name for each extension function with the same name.
 // Without this, type erasure will cause compiler errors because these methods will have the same
@@ -73,4 +73,4 @@ fun List<NewsResourceEntity>.toExternal() = map(NewsResourceEntity::asExternalMo
 fun List<NewsResource>.toLocal() = map(NewsResource::asLocal)
 
 @JvmName("localToLo")
-fun List<NetworkNewsResource>.toLocal() = map(NetworkNewsResource::asLocal)
+fun List<NetworkNewsResource>.toLocal(bookmarksIds: List<String>) = map {it.asLocal(bookmarksIds)}

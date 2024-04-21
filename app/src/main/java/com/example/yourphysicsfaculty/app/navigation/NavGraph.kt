@@ -26,6 +26,6 @@ fun YPFNavGraph(
         forYouScreen()
         bookmarksScreen()
         timetableScreen()
-        profileScreen(onShowSnackbar = onShowSnackbar)
+        profileScreen(onShowSnackbar)
     }
 }

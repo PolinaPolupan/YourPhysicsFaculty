@@ -1,19 +1,20 @@
 <resources>
     <string name="app_name">YourPhysicsFaculty</string>
-    <string name="for_you_screen_title">For You</string>
-    <string name="timetable_screen_title">Timetable</string>
-    <string name="bookmarks_screen_title">Bookmarks</string>
-    <string name="practice_title">Practice</string>
+    <string name="for_you_screen_title">Лента</string>
+    <string name="timetable_screen_title">Расписание</string>
+    <string name="bookmarks_screen_title">Закладки</string>
+    <string name="practice_title">Практика</string>
     <string name="laboratory_work_title">Laboratory work</string>
     <string name="lecture_title">Lecture</string>
     <string name="independent_work_title">Independent Work</string>
     <string name="bookmarks_toggle_button">Bookmark toggle</string>
-    <string name="go_to_page_button">Go to page</string>
-    <string name="profile">Profile</string>
-    <string name="sign_in">Sign in</string>
-    <string name="sign_in_to_account">Sign in to your account</string>
-    <string name="sign_up">Sign up</string>
-    <string name="enter_password">Enter your password</string>
-    <string name="enter_email">Enter your email</string>
-    <string name="forgot_password">Forgot password?</string>
+    <string name="go_to_page_button">Перейти на страницу</string>
+    <string name="profile">Профиль</string>
+    <string name="sign_in">Вход</string>
+    <string name="sign_in_to_account">Вход в аккаунт</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="enter_email">Введите email</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="floors_scheme">Схема этажей</string>
 </resources>

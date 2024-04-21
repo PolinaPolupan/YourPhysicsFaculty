@@ -45,13 +45,6 @@ class ProfileViewModel @Inject constructor(
 
     fun singIn(email: String, password: String) {
         viewModelScope.launch {
-            /*val param = JsonObject().apply {
-                addProperty("email", email)
-                addProperty("password", password)
-            }*/
-            val authData = HashMap<String, String>()
-            authData.put("email", email)
-            authData.put("password", password)
             try {
                 val report = retrofitErrorHandler(networkService.signIn(AuthorizationRequest(email, password)))
                 response.value = "Success!"
@@ -63,9 +56,6 @@ class ProfileViewModel @Inject constructor(
 
     fun singUp(email: String, password: String) {
         viewModelScope.launch {
-            val authData = HashMap<String, String>()
-            authData.put("email", email)
-            authData.put("password", password)
             try {
                 val report = retrofitErrorHandler(networkService.signUp(AuthorizationRequest(email, password)))
                 response.value = "Success!"

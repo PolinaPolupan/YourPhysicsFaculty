@@ -18,6 +18,11 @@ import javax.inject.Inject
 class ForYouViewModel @Inject constructor(
     private val userNewsResourceRepository: UserNewsResourceRepository
 ) : ViewModel() {
+    init {
+        viewModelScope.launch {
+            userNewsResourceRepository.refresh()
+        }
+    }
 
     var feedState: StateFlow<NewsFeedUiState> =
         userNewsResourceRepository.observeAll()

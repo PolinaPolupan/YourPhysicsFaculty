@@ -84,7 +84,7 @@ fun ProfileScreenContent(
     }
     LaunchedEffect(shouldShowSnackBar) {
         if (shouldShowSnackBar) {
-            val snackBarResult = onShowSnackbar(response, "Dismiss")
+           val snackBarResult = onShowSnackbar(response, "Dismiss")
         }
     }
 
@@ -146,6 +146,7 @@ fun ProfileScreenContent(
             TextButton(onClick = { /*TODO*/ }) {
                 Text(text = stringResource(id = R.string.forgot_password), color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
             }
+            Text(text = response)
         }
     }
 }
