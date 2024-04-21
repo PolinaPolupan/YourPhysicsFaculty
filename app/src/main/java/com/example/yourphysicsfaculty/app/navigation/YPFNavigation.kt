@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.yourphysicsfaculty.R
 import com.example.yourphysicsfaculty.app.navigation.YPFScreens.BOOKMARKS_SCREEN
 import com.example.yourphysicsfaculty.app.navigation.YPFScreens.FOR_YOU_SCREEN
+import com.example.yourphysicsfaculty.app.navigation.YPFScreens.PROFILE_SCREEN
 import com.example.yourphysicsfaculty.app.navigation.YPFScreens.TIMETABLE_SCREEN
 import com.example.yourphysicsfaculty.core.designSystem.component.YPFIcons
 
@@ -14,6 +15,7 @@ private object YPFScreens {
     const val FOR_YOU_SCREEN = "for_you"
     const val BOOKMARKS_SCREEN = "bookmarks"
     const val TIMETABLE_SCREEN = "timetable"
+    const val PROFILE_SCREEN = "profile"
 }
 
 /**
@@ -23,6 +25,7 @@ object YPFDestinations {
     const val FOR_YOU_ROUTE = FOR_YOU_SCREEN
     const val BOOKMARKS_ROUTE = BOOKMARKS_SCREEN
     const val TIMETABLE_ROUTE = TIMETABLE_SCREEN
+    const val PROFILE_ROUTE = PROFILE_SCREEN
 }
 
 /**
@@ -54,5 +57,11 @@ enum class TopLevelDestination(
         iconTextId = R.string.timetable_screen_title,
         titleTextId = R.string.timetable_screen_title,
     ),
+    PROFILE(
+        selectedIcon = YPFIcons.Profile,
+        unselectedIcon = YPFIcons.ProfileBorder,
+        iconTextId = R.string.profile,
+        titleTextId = R.string.profile
+    )
 }
 

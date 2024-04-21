@@ -9,4 +9,11 @@
     <string name="independent_work_title">Independent Work</string>
     <string name="bookmarks_toggle_button">Bookmark toggle</string>
     <string name="go_to_page_button">Go to page</string>
+    <string name="profile">Profile</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_in_to_account">Sign in to your account</string>
+    <string name="sign_up">Sign up</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="forgot_password">Forgot password?</string>
 </resources>

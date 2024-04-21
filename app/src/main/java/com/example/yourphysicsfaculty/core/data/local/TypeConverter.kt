@@ -4,6 +4,9 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 
 
+/**
+ *  Converts String to List of strings
+ */
 class Converters {
 
     @TypeConverter

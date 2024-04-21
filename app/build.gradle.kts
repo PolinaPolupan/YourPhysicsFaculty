@@ -1,3 +1,5 @@
+import java.util.regex.Pattern.compile
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -22,6 +24,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.example.YourPhysicsFaculty"
     }
 
     buildTypes {
@@ -69,7 +72,8 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7") // Navigation
     implementation("androidx.navigation:navigation-compose") // Navigation Compose
     implementation("io.coil-kt:coil-compose:2.6.0") // Coil
-    implementation("com.google.dagger:hilt-android:2.51.1") // Hilt
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation("androidx.datastore:datastore-core-android:1.1.0") // Hilt
     kapt("com.google.dagger:hilt-android-compiler:2.51.1") // Hilt compiler
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0") // Hilt nav
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0") // Lifecycle compose
@@ -80,9 +84,15 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.6.1")
     annotationProcessor ("androidx.room:room-compiler:2.6.1")
     kapt ("androidx.room:room-compiler:2.6.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1") // Gson serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0") // Gson serialization
     implementation("com.google.code.gson:gson:2.10") // Gson
-
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0") // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation ("com.auth0.android:jwtdecode:2.0.0")
+    implementation ("net.openid:appauth:0.9.1")
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
+    implementation("androidx.datastore:datastore-core-android:1.1.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

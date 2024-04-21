@@ -31,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.yourphysicsfaculty.R
 import com.example.yourphysicsfaculty.core.designSystem.component.NewsResourceCard
 import com.example.yourphysicsfaculty.core.designSystem.component.UserNewsResourcePreviewParameterProvider
+import com.example.yourphysicsfaculty.core.designSystem.component.YPFBackground
 import com.example.yourphysicsfaculty.core.designSystem.component.YPFIcons
 import com.example.yourphysicsfaculty.core.designSystem.theme.YPFTheme
 import com.example.yourphysicsfaculty.core.model.NewsResource
@@ -43,6 +44,7 @@ fun ForYouScreen(
     val feedState = viewModel.feedState.collectAsStateWithLifecycle()
     ForYouScreenContent(
         feedState = feedState.value,
+        onToggleBookmark = viewModel::toggleBookmarked,
         modifier = modifier
     )
 }
@@ -50,13 +52,20 @@ fun ForYouScreen(
 @Composable
 fun ForYouScreenContent(
     feedState: NewsFeedUiState,
+    onToggleBookmark: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier
-    ) {
-        newsFeed(feedState = feedState, onExpandedCardClick = {})
+    YPFBackground {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = modifier
+        ) {
+            newsFeed(
+                feedState = feedState,
+                onExpandedCardClick = {},
+                onToggleBookmark = onToggleBookmark
+            )
+        }
     }
 }
 
@@ -67,7 +76,8 @@ fun ForYouScreenContent(
 @OptIn(ExperimentalFoundationApi::class)
 fun LazyListScope.newsFeed(
     feedState: NewsFeedUiState,
-    onExpandedCardClick: () -> Unit = {},
+    onExpandedCardClick: () -> Unit,
+    onToggleBookmark: (String, Boolean) -> Unit,
 ) {
     when (feedState) {
         NewsFeedUiState.Loading -> Unit
@@ -79,12 +89,11 @@ fun LazyListScope.newsFeed(
             ) { userNewsResource ->
                NewsResourceCard(
                     userNewsResource = userNewsResource,
-                    isBookmarked = true,
+                    isBookmarked = userNewsResource.isBookmarked,
                     onClick = {
                         onExpandedCardClick()
                     },
-                    onToggleBookmark = {
-                    },
+                    onToggleBookmark = { onToggleBookmark(userNewsResource.id, userNewsResource.isBookmarked) },
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                         .animateItemPlacement(),

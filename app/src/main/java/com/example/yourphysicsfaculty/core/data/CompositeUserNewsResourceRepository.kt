@@ -16,14 +16,19 @@ import javax.inject.Inject
  * Implements a [UserNewsResourceRepository] by combining a [NewsRepository] with a
  * [UserDataRepository].
  */
-class CompositeUserNewsResourceRepository @Inject constructor(
-    val localDataSource: NewsResourcesDao,
-    val networkDataSource: NetworkDataSource,
+class DefaultUserNewsResourceRepository @Inject constructor(
+    private val localDataSource: NewsResourcesDao,
+    private val networkDataSource: NetworkDataSource,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
 ) : UserNewsResourceRepository {
 
     override fun observeAll(): Flow<List<NewsResource>> {
         return localDataSource.observeAll().map { it.toExternal() }
+    }
+
+    override suspend fun toggleBookmark(newsId: String, isBookmarked: Boolean) {
+        localDataSource.updateBookmarked(newsId, isBookmarked)
+        //refresh()
     }
 
     suspend fun refresh() {

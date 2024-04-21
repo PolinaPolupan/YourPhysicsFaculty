@@ -1,6 +1,6 @@
 package com.example.yourphysicsfaculty.core.model
 
-data class Professor(
+data class Lecturer(
     val id: String,
     val name: String
 )

@@ -20,7 +20,7 @@ interface NewsResourcesDao {
     fun observeAll(): Flow<List<NewsResourceEntity>>
 
     /**
-     * Observes list of ids of bookmarked news.
+     * Observes list of ids of news.
      *
      * @return all ids.
      */
@@ -29,6 +29,14 @@ interface NewsResourcesDao {
 
     @Query("SELECT id FROM news_resources")
     fun observeAllIds(): Flow<List<String>>
+
+    /**
+     * Returns list of ids of bookmarked news
+     *
+     * @return all ids.
+     */
+    @Query("SELECT id FROM news_resources WHERE isBookmarked == true")
+    fun getAllBookmarkedIds(): List<String>
 
     /**
      * Observes a single news resource.
@@ -53,7 +61,7 @@ interface NewsResourcesDao {
      * @param newsId id of the task
      * @param bookmarked status to be updated
      */
-    @Query("UPDATE news_resources SET isBookmarked = :bookmarked WHERE id = :newsId")
+    @Query("UPDATE news_resources SET isBookmarked = not :bookmarked WHERE id = :newsId")
     suspend fun updateBookmarked(newsId: String, bookmarked: Boolean)
 
     /**

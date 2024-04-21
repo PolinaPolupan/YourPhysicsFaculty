@@ -13,10 +13,11 @@ enum class TimetableEventType(val title: Int) {
 
 data class TimetableEvent(
     val id: String,
+    val name: String,
     val type: TimetableEventType,
-    val startTime: Date,
-    val endTime: Date,
-    val professors: List<Professor>,
+    val startTime: String,
+    val endTime: String,
+    val lecturers: List<Lecturer>,
     val groups: List<Group>,
-    val cabinet: String
+    val room: String
 )

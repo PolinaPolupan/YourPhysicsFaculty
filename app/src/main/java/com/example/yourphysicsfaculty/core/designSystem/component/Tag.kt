@@ -20,7 +20,7 @@ fun YPFTopicTag(
     text: @Composable () -> Unit,
 ) {
     Box(modifier = modifier) {
-        val containerColor = MaterialTheme.colorScheme.primaryContainer
+        val containerColor = MaterialTheme.colorScheme.primary
 
         TextButton(
             onClick = onClick,

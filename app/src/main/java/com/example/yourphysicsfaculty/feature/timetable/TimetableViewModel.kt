@@ -2,12 +2,55 @@ package com.example.yourphysicsfaculty.feature.timetable
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import com.example.yourphysicsfaculty.core.designSystem.component.PreviewParameterData
+import com.example.yourphysicsfaculty.core.model.DayEvents
+import com.example.yourphysicsfaculty.core.model.NewsResource
+import com.example.yourphysicsfaculty.core.model.TimetableEvent
+import com.example.yourphysicsfaculty.feature.foryou.NewsFeedUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.stream.Collectors
 import java.util.stream.Stream
+import javax.inject.Inject
+
+
+@HiltViewModel
+class TimetableViewModel @Inject constructor(): ViewModel() {
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val uiState = mutableStateOf(TimetableUiState(date = LocalDate.now(), events = PreviewParameterData.timetableEvents))
+
+}
+
+data class TimetableUiState(
+    val date: LocalDate,
+    val events: List<TimetableEvent>
+)
+
+/* A sealed hierarchy describing the state of the feed of news resources.
+*/
+sealed interface EventsFeedUiState {
+    /**
+     * The feed is still loading.
+     */
+    data object Loading : EventsFeedUiState
+
+    /**
+     * The feed is loaded with the given list of news resources.
+     */
+    data class Success(
+        /**
+         * The list of news resources contained in this feed.
+         */
+        val events: DayEvents,
+    ) : EventsFeedUiState
+}
+
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarDataSource {
 

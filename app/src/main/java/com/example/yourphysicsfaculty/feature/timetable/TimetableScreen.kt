@@ -3,9 +3,13 @@ package com.example.yourphysicsfaculty.feature.timetable
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,12 +21,9 @@ import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,33 +32,71 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.example.yourphysicsfaculty.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.yourphysicsfaculty.core.designSystem.component.TimetableEventCard
+import com.example.yourphysicsfaculty.core.designSystem.component.TimetableEventsPreviewParameterProvider
+import com.example.yourphysicsfaculty.core.designSystem.component.YPFBackground
 import com.example.yourphysicsfaculty.core.designSystem.theme.YPFTheme
-import java.time.LocalDate
+import com.example.yourphysicsfaculty.core.model.TimetableEvent
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TimetableScreen(
-    modifier: Modifier = Modifier
+    viewModel: TimetableViewModel = hiltViewModel()
 ) {
-
-    TimetableScreenContent( modifier = modifier)
+    val uiState = viewModel.uiState
+    TimetableScreenContent(events = uiState.value.events)
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TimetableScreenContent(
+    events: List<TimetableEvent>
+) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        DatesRow()
+        Spacer(modifier = Modifier.height(16.dp))
+        EventsList(events = events)
+    }
+}
+
+@Composable
+fun EventsList(
+    events: List<TimetableEvent>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier.fillMaxSize()
+    ) {
+        items(items = events) {event ->
+            TimetableEventCard(
+                event = event,
+                isBookmarked = true,
+                onToggleBookmark = { /*TODO*/ },
+                onClick = { /*TODO*/ })
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun DatesRow(
     modifier: Modifier = Modifier
 ) {
     val dataSource = CalendarDataSource()
     // get CalendarUiModel from CalendarDataSource, and the lastSelectedDate is Today.
     var calendarUiModel by remember { mutableStateOf(dataSource.getData(lastSelectedDate = dataSource.today)) }
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Header(
             data = calendarUiModel,
             onPrevClickListener = { startDate ->
@@ -96,7 +135,7 @@ fun Header(
     onPrevClickListener: (java.time.LocalDate) -> Unit,
     onNextClickListener: (java.time.LocalDate) -> Unit,
 ) {
-    Row {
+    Row(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             // show "Today" if user selects today's date
             // else, show the full format of the date
@@ -107,6 +146,7 @@ fun Header(
                     DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
                 )
             },
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
             modifier = Modifier
                 .weight(1f)
                 .align(Alignment.CenterVertically)
@@ -134,7 +174,10 @@ fun Content(
     // callback should be registered from outside
     onDateClickListener: (CalendarUiModel.Date) -> Unit,
 ) {
-    LazyRow {
+    LazyRow(
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxWidth()
+    ) {
         items(items = data.visibleDates) { date ->
             ContentItem(
                 date = date,
@@ -163,7 +206,7 @@ fun ContentItem(
             containerColor = if (date.isSelected) {
                 MaterialTheme.colorScheme.primary
             } else {
-                MaterialTheme.colorScheme.secondary
+                Color.Transparent
             }
         ),
     ) {
@@ -176,7 +219,7 @@ fun ContentItem(
             Text(
                 text = date.day, // day "Mon", "Tue"
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.SemiBold)
             )
             Text(
                 text = date.date.dayOfMonth.toString(), // date "15", "16"
@@ -189,8 +232,11 @@ fun ContentItem(
 
 @Preview
 @Composable
-fun ForYouScreenPreview(modifier: Modifier = Modifier) {
+fun ForYouScreenPreview(
+    @PreviewParameter(TimetableEventsPreviewParameterProvider::class)
+    events: List<TimetableEvent>
+) {
     YPFTheme {
-        TimetableScreenContent()
+       TimetableScreenContent(events = events)
     }
 }

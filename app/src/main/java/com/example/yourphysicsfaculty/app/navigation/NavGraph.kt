@@ -7,11 +7,13 @@ import com.example.yourphysicsfaculty.app.navigation.YPFDestinations.FOR_YOU_ROU
 import com.example.yourphysicsfaculty.app.ui.YPFAppState
 import com.example.yourphysicsfaculty.feature.bookmarks.bookmarksScreen
 import com.example.yourphysicsfaculty.feature.foryou.forYouScreen
+import com.example.yourphysicsfaculty.feature.profile.profileScreen
 import com.example.yourphysicsfaculty.feature.timetable.timetableScreen
 
 @Composable
 fun YPFNavGraph(
     appState: YPFAppState,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
     startDestination: String = FOR_YOU_ROUTE,
 ) {
@@ -24,5 +26,6 @@ fun YPFNavGraph(
         forYouScreen()
         bookmarksScreen()
         timetableScreen()
+        profileScreen(onShowSnackbar = onShowSnackbar)
     }
 }

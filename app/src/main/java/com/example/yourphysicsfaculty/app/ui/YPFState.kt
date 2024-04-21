@@ -16,6 +16,7 @@ import com.example.yourphysicsfaculty.app.navigation.YPFDestinations.FOR_YOU_ROU
 import com.example.yourphysicsfaculty.app.navigation.YPFDestinations.TIMETABLE_ROUTE
 import com.example.yourphysicsfaculty.feature.bookmarks.navigateToBookmarks
 import com.example.yourphysicsfaculty.feature.foryou.navigateToForYou
+import com.example.yourphysicsfaculty.feature.profile.navigateToProfile
 import com.example.yourphysicsfaculty.feature.timetable.navigateToTimetable
 import kotlinx.coroutines.CoroutineScope
 
@@ -65,6 +66,13 @@ class YPFAppState(
             TopLevelDestination.FOR_YOU -> navController.navigateToForYou()
             TopLevelDestination.BOOKMARKS -> navController.navigateToBookmarks()
             TopLevelDestination.TIMETABLE -> navController.navigateToTimetable()
+            TopLevelDestination.PROFILE -> navController.navigateToProfile()
         }
     }
+}
+
+sealed class ViewState {
+    object LoggedIn: ViewState() // hasLoggedIn = true
+    object NotLoggedIn: ViewState() // hasLoggedIn = false
+    object Loading: ViewState()
 }

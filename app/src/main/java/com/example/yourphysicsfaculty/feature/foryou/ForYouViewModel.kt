@@ -1,11 +1,9 @@
 package com.example.yourphysicsfaculty.feature.foryou
 
-import android.content.Intent
-import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.yourphysicsfaculty.core.data.CompositeUserNewsResourceRepository
+import com.example.yourphysicsfaculty.core.data.UserNewsResourceRepository
 import com.example.yourphysicsfaculty.core.model.NewsResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,15 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ForYouViewModel @Inject constructor(
-    private val userNewsResourceRepository: CompositeUserNewsResourceRepository
+    private val userNewsResourceRepository: UserNewsResourceRepository
 ) : ViewModel() {
-
-    init {
-        viewModelScope.launch {
-            userNewsResourceRepository.refresh()
-        }
-    }
-
 
     var feedState: StateFlow<NewsFeedUiState> =
         userNewsResourceRepository.observeAll()
@@ -36,6 +27,13 @@ class ForYouViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = NewsFeedUiState.Loading,
             )
+
+    fun toggleBookmarked(newsId: String, isBookmarked: Boolean)
+    {
+        viewModelScope.launch {
+            userNewsResourceRepository.toggleBookmark(newsId, isBookmarked)
+        }
+    }
 }
 
 

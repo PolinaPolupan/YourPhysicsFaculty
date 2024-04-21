@@ -4,8 +4,13 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.yourphysicsfaculty.core.designSystem.component.PreviewParameterData.newsResources
+import com.example.yourphysicsfaculty.core.designSystem.component.PreviewParameterData.timetableEvents
+import com.example.yourphysicsfaculty.core.model.Group
+import com.example.yourphysicsfaculty.core.model.Lecturer
 import com.example.yourphysicsfaculty.core.model.Topic
 import com.example.yourphysicsfaculty.core.model.NewsResource
+import com.example.yourphysicsfaculty.core.model.TimetableEvent
+import com.example.yourphysicsfaculty.core.model.TimetableEventType
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
@@ -18,6 +23,12 @@ class UserNewsResourcePreviewParameterProvider : PreviewParameterProvider<List<N
 
     @RequiresApi(Build.VERSION_CODES.O)
     override val values: Sequence<List<NewsResource>> = sequenceOf(newsResources)
+}
+
+class TimetableEventsPreviewParameterProvider : PreviewParameterProvider<List<TimetableEvent>> {
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override val values: Sequence<List<TimetableEvent>> = sequenceOf(timetableEvents)
 }
 
 object PreviewParameterData {
@@ -76,6 +87,58 @@ object PreviewParameterData {
             topics = listOf("студентам", "экскурсии"),
             isBookmarked = true
         ),
+    )
+    val timetableEvents: List<TimetableEvent> = listOf(
+        TimetableEvent(
+            id = "0",
+            name = "Молекулярная физика",
+            type = TimetableEventType.LECTURE,
+            startTime = "09:00",
+            endTime = "10:35",
+            lecturers = listOf(Lecturer(id = "0", name = "Харабадзе Д. Э")),
+            groups = listOf(Group("0", 1)),
+            room = "5-40"
+        ),
+        TimetableEvent(
+            id = "0",
+            name = "Молекулярная физика",
+            type = TimetableEventType.LECTURE,
+            startTime = "09:00",
+            endTime = "10:35",
+            lecturers = listOf(Lecturer(id = "0", name = "Харабадзе Д. Э")),
+            groups = listOf(Group("0", 1)),
+            room = "5-40"
+        ),
+        TimetableEvent(
+            id = "0",
+            name = "Молекулярная физика",
+            type = TimetableEventType.LECTURE,
+            startTime = "09:00",
+            endTime = "10:35",
+            lecturers = listOf(Lecturer(id = "0", name = "Харабадзе Д. Э")),
+            groups = listOf(Group("0", 1)),
+            room = "5-40"
+        ),
+        TimetableEvent(
+            id = "0",
+            name = "Молекулярная физика",
+            type = TimetableEventType.LECTURE,
+            startTime = "09:00",
+            endTime = "10:35",
+            lecturers = listOf(Lecturer(id = "0", name = "Харабадзе Д. Э")),
+            groups = listOf(Group("0", 1)),
+            room = "5-40"
+        ),
+        TimetableEvent(
+            id = "0",
+            name = "Молекулярная физика",
+            type = TimetableEventType.LECTURE,
+            startTime = "09:00",
+            endTime = "10:35",
+            lecturers = listOf(Lecturer(id = "0", name = "Харабадзе Д. Э")),
+            groups = listOf(Group("0", 1)),
+            room = "5-40"
+        )
     )
 }
 
